@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Programming Challenge</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+        
+        .difficulty-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 10px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .questions-container {
+            display: none;
+        }
+        
+        .questions-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .question-desc {
+            margin-bottom: 15px;
+        }
+        
+        .hint-btn {
+            background-color: var(--warning);
+            color: var(--dark);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+        
+        .hint-btn:hover {
+            background-color: #e0a800;
+        }
+        
+        .hint-content {
+            display: none;
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid var(--warning);
+            margin-top: 10px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .difficulty-label {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .easy {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .hard {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .difficulty-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>String Programming Challenge</h1>
+            <p class="subtitle">Test your string manipulation skills with these coding problems</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="difficulty-tabs">
+            <button class="tab active" onclick="showQuestions('easy')">Easy</button>
+            <button class="tab" onclick="showQuestions('medium')">Medium</button>
+            <button class="tab" onclick="showQuestions('hard')">Hard</button>
+        </div>
+        
+        <div id="easy-questions" class="questions-container active">
+            <!-- Easy Questions -->
+            <div class="question-card">
+                <span class="difficulty-label easy">Easy</span>
+                <div class="question-title">1. Reverse a String</div>
+                <div class="question-desc">
+                    Write a function that takes a string as input and returns the string reversed.
+                    <br><br>
+                    Example: "hello" → "olleh"
+                </div>
+                <button class="hint-btn" onclick="toggleHint(1)">Show Hint</button>
+                <div class="hint-content" id="hint-1">
+                    Think about how you can iterate through the string from the end to the beginning.
+                    In JavaScript, strings are immutable, so you might need to convert to an array first.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label easy">Easy</span>
+                <div class="question-title">2. Palindrome Check</div>
+                <div class="question-desc">
+                    Write a function that checks if a given string is a palindrome (reads the same backward as forward).
+                    <br><br>
+                    Example: "madam" → true, "hello" → false
+                </div>
+                <button class="hint-btn" onclick="toggleHint(2)">Show Hint</button>
+                <div class="hint-content" id="hint-2">
+                    Compare characters from the start and end moving towards the center. 
+                    Remember to ignore case and non-alphanumeric characters if needed.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label easy">Easy</span>
+                <div class="question-title">3. Count Vowels</div>
+                <div class="question-desc">
+                    Write a function that counts the number of vowels in a given string.
+                    <br><br>
+                    Example: "apple" → 2, "why" → 0
+                </div>
+                <button class="hint-btn" onclick="toggleHint(3)">Show Hint</button>
+                <div class="hint-content" id="hint-3">
+                    Consider both uppercase and lowercase vowels. You can create a set of vowels to check against.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label easy">Easy</span>
+                <div class="question-title">4. Capitalize Words</div>
+                <div class="question-desc">
+                    Write a function that capitalizes the first letter of each word in a string.
+                    <br><br>
+                    Example: "hello world" → "Hello World"
+                </div>
+                <button class="hint-btn" onclick="toggleHint(4)">Show Hint</button>
+                <div class="hint-content" id="hint-4">
+                    Split the string into words, capitalize the first letter of each, then join them back.
+                    Or iterate through the string and capitalize letters that follow a space.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label easy">Easy</span>
+                <div class="question-title">5. Find Substring</div>
+                <div class="question-desc">
+                    Write a function that checks if a substring exists in a string and returns its starting index, or -1 if not found.
+                    <br><br>
+                    Example: "hello", "ll" → 2
+                </div>
+                <button class="hint-btn" onclick="toggleHint(5)">Show Hint</button>
+                <div class="hint-content" id="hint-5">
+                    You can use built-in string methods, or implement a simple sliding window approach.
+                </div>
+            </div>
+        </div>
+        
+        <div id="medium-questions" class="questions-container">
+            <!-- Medium Questions -->
+            <div class="question-card">
+                <span class="difficulty-label medium">Medium</span>
+                <div class="question-title">1. Longest Substring Without Repeating Characters</div>
+                <div class="question-desc">
+                    Given a string, find the length of the longest substring without repeating characters.
+                    <br><br>
+                    Example: "abcabcbb" → 3 ("abc"), "bbbbb" → 1 ("b")
+                </div>
+                <button class="hint-btn" onclick="toggleHint(6)">Show Hint</button>
+                <div class="hint-content" id="hint-6">
+                    Use a sliding window approach with a hash map to track character positions.
+                    Adjust the window when a duplicate is found.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label medium">Medium</span>
+                <div class="question-title">2. String to Integer (atoi)</div>
+                <div class="question-desc">
+                    Implement the atoi function which converts a string to an integer.
+                    Handle leading whitespace, optional +/- sign, and stop at first non-digit.
+                    <br><br>
+                    Example: "42" → 42, "   -42" → -42, "4193 with words" → 4193
+                </div>
+                <button class="hint-btn" onclick="toggleHint(7)">Show Hint</button>
+                <div class="hint-content" id="hint-7">
+                    Process the string character by character, building the number digit by digit.
+                    Don't forget to handle overflow cases.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label medium">Medium</span>
+                <div class="question-title">3. Group Anagrams</div>
+                <div class="question-desc">
+                    Given an array of strings, group anagrams together.
+                    <br><br>
+                    Example: ["eat", "tea", "tan", "ate", "nat", "bat"] → [["eat","tea","ate"],["tan","nat"],["bat"]]
+                </div>
+                <button class="hint-btn" onclick="toggleHint(8)">Show Hint</button>
+                <div class="hint-content" id="hint-8">
+                    Anagrams have the same character counts. Consider using sorted strings as keys in a hash map.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label medium">Medium</span>
+                <div class="question-title">4. Longest Palindromic Substring</div>
+                <div class="question-desc">
+                    Given a string, find the longest substring which is a palindrome.
+                    <br><br>
+                    Example: "babad" → "bab" or "aba", "cbbd" → "bb"
+                </div>
+                <button class="hint-btn" onclick="toggleHint(9)">Show Hint</button>
+                <div class="hint-content" id="hint-9">
+                    Consider expanding around each character (and between characters) to find palindromes.
+                    There's a O(n²) solution with O(1) space.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label medium">Medium</span>
+                <div class="question-title">5. String Compression</div>
+                <div class="question-desc">
+                    Compress a string by replacing consecutive duplicate characters with the character followed by count.
+                    If compressed string is not smaller, return original.
+                    <br><br>
+                    Example: "aabcccccaaa" → "a2b1c5a3", "abc" → "abc"
+                </div>
+                <button class="hint-btn" onclick="toggleHint(10)">Show Hint</button>
+                <div class="hint-content" id="hint-10">
+                    Iterate through the string while counting consecutive characters.
+                    Build the compressed string as you go, and compare lengths at the end.
+                </div>
+            </div>
+        </div>
+        
+        <div id="hard-questions" class="questions-container">
+            <!-- Hard Questions -->
+            <div class="question-card">
+                <span class="difficulty-label hard">Hard</span>
+                <div class="question-title">1. Regular Expression Matching</div>
+                <div class="question-desc">
+                    Implement regular expression matching with support for '.' and '*'.
+                    '.' matches any single character. '*' matches zero or more of the preceding element.
+                    <br><br>
+                    Example: "aa", "a" → false; "aa", "a*" → true; "ab", ".*" → true
+                </div>
+                <button class="hint-btn" onclick="toggleHint(11)">Show Hint</button>
+                <div class="hint-content" id="hint-11">
+                    This problem requires dynamic programming or recursion with memoization.
+                    Consider all cases when encountering a '*'.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label hard">Hard</span>
+                <div class="question-title">2. Minimum Window Substring</div>
+                <div class="question-desc">
+                    Given two strings S and T, find the minimum window in S which contains all characters of T.
+                    <br><br>
+                    Example: S = "ADOBECODEBANC", T = "ABC" → "BANC"
+                </div>
+                <button class="hint-btn" onclick="toggleHint(12)">Show Hint</button>
+                <div class="hint-content" id="hint-12">
+                    Use a sliding window approach with two pointers. Track character counts with hash maps.
+                    Expand the window when missing characters, contract when all are found.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label hard">Hard</span>
+                <div class="question-title">3. Word Break</div>
+                <div class="question-desc">
+                    Given a string and a dictionary of words, determine if the string can be segmented into space-separated dictionary words.
+                    <br><br>
+                    Example: "leetcode", ["leet", "code"] → true
+                </div>
+                <button class="hint-btn" onclick="toggleHint(13)">Show Hint</button>
+                <div class="hint-content" id="hint-13">
+                    Dynamic programming works well here. Track which positions in the string are break points.
+                    For each position, check all possible previous break points.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label hard">Hard</span>
+                <div class="question-title">4. Longest Valid Parentheses</div>
+                <div class="question-desc">
+                    Given a string containing just '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+                    <br><br>
+                    Example: "(()" → 2, ")()())" → 4
+                </div>
+                <button class="hint-btn" onclick="toggleHint(14)">Show Hint</button>
+                <div class="hint-content" id="hint-14">
+                    Use a stack to track indices of unmatched parentheses, or use dynamic programming.
+                    The stack approach is more straightforward.
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <span class="difficulty-label hard">Hard</span>
+                <div class="question-title">5. Edit Distance</div>
+                <div class="question-desc">
+                    Given two strings, find the minimum number of operations (insert, delete, replace) to convert one string to another.
+                    <br><br>
+                    Example: "horse", "ros" → 3 (horse → rorse → rose → ros)
+                </div>
+                <button class="hint-btn" onclick="toggleHint(15)">Show Hint</button>
+                <div class="hint-content" id="hint-15">
+                    This is a classic dynamic programming problem. Create a 2D DP table where dp[i][j] represents
+                    the edit distance between the first i characters of word1 and first j characters of word2.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>String Programming Challenge &copy; 2025 | Test your string manipulation skills</p>
+        </div>
+    </footer>
+    
+    <script>
+        function showQuestions(difficulty) {
+            // Hide all question containers
+            document.querySelectorAll('.questions-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected container and activate tab
+            document.getElementById(`${difficulty}-questions`).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function toggleHint(hintNumber) {
+            const hint = document.getElementById(`hint-${hintNumber}`);
+            const button = event.target;
+            
+            if (hint.style.display === 'block') {
+                hint.style.display = 'none';
+                button.textContent = 'Show Hint';
+            } else {
+                hint.style.display = 'block';
+                button.textContent = 'Hide Hint';
+            }
+        }
+    </script>
+</body>
+</html>
